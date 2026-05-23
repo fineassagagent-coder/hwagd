@@ -1,0 +1,35 @@
+name: MinGW-Build
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Setup MSYS2
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: MINGW64
+        update: true
+        install: >-
+          mingw-w64-x86_64-gcc
+          mingw-w64-x86_64-cmake
+          make
+
+    - name: Compile Daemon
+      shell: msys2 {0}
+      run: |
+        cd AppCompatCollector/src
+        g++ AppCompatCollector.cpp Egress.cpp GraphBuilder.cpp InputCapture.cpp MonitoringTimer.cpp Storage.cpp TemporalCorrelation.cpp UIA_Observer.cpp VisualAnchor.cpp WGC_Ocr.cpp -o ../../AppCompatCollector.exe -O3 -mwindows -luiautomationcore -lole32 -loleaut32 -luser32 -lgdi32 -ldwmapi -lshlwapi
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: hwagd-compiled-daemon
+        path: AppCompatCollector.exe
