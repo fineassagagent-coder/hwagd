@@ -3,6 +3,7 @@ name: MSBuild
 on:
   push:
     branches: [ "main" ]
+  workflow_dispatch:
 
 env:
   SOLUTION_FILE_PATH: hwagd.sln
