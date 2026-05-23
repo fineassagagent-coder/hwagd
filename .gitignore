@@ -1,0 +1,26 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+x64/
+Debug/
+Release/
+
+# Android / Gradle (PimPim, Project Vanguard)
+build/
+.gradle/
+*.apk
+*.aab
+local.properties
+
+# Database / Locks
+*.db
+*.lock
+.git/index.lock
+
+# Node / Web
+node_modules/
+.env
+
+# vcpkg
+vcpkg_installed/
